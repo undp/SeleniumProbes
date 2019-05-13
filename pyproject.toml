@@ -1,0 +1,139 @@
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  |  \.tox
+  | \.pytest_cache
+  | __pycache__
+)/
+'''
+
+[tool.poetry]
+name = "selenium_probes"
+version = "0.1.0-rc.0"
+description = "A framework for building Selenium-based probes."
+
+license = "MIT"
+
+authors = ["Oleksiy Kuzmenko <oleksiy.kuzmenko@undp.org>"]
+
+repository = "https://github.com/undp/SeleniumProbes"
+homepage = "https://github.com/undp/SeleniumProbes"
+
+readme = "README.md"
+
+include = [
+  "CHANGELOG.md",
+  "CONTRIBUTING.md",
+  "LICENSE.md",
+  "docker-compose.yml",
+  "tox.ini",
+  "tests/*.py",
+  "docs/conf.py",
+  "docs/*.rst",
+  "docs/*.md",
+]
+
+keywords = [
+  "development",
+  "monitoring",
+  "selenium",
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Natural Language :: English",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: System :: Monitoring",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+selenium = "^3.141"
+
+# keyvault
+azure-keyvault = {version = "^1.1", optional = true}
+
+# test
+pytest = {version = "^4.4.2", optional = true}
+pytest-cov = {version = "^2.7", optional = true}
+pytest-dockerc = {version = "^1.0", optional = true}
+pytest-instafail = {version = "^0.4.1", optional = true}
+pytest-lazy-fixture = {version = "^0.5.2", optional = true}
+pytest-random-order = {version = "^1.0", optional = true}
+pytest-variables = {version = "^1.7", extras = ["yaml"], optional = true}
+
+# docs
+recommonmark = {version = "^0.5.0", optional = true}
+sphinx = {version = "^2.0", optional = true}
+sphinx_rtd_theme = {version = "^0.4.3", optional = true}
+
+# code-lint
+flake8 = {version = "^3.7", optional = true}
+flake8-import-order = {version = "^0.18.1", optional = true}
+flake8-bandit = {version = "^2.1", optional = true}
+flake8-blind-except = {version = "^0.1.1", optional = true}
+flake8-bugbear = {version = "^19.3", optional = true}
+flake8-builtins = {version = "^1.4", optional = true}
+flake8-docstrings = {version = "^1.3", optional = true}
+flake8-logging-format = {version = "^0.6.0", optional = true}
+pep8-naming = {version = "^0.8.2", optional = true}
+pygments = {version = "^2.4", optional = true}
+
+# code-format
+black = {version = "^19.3b0", optional = true}
+blacken-docs = {version = "^0.5.0", optional = true}
+
+[tool.poetry.extras]
+keyvault = [
+  "azure-keyvault"
+]
+
+test = [
+  "pytest",
+  "pytest-cov",
+  "pytest-dockerc",
+  "pytest-instafail",
+  "pytest-lazy-fixture",
+  "pytest-random-order",
+  "pytest-variables",
+]
+
+docs = [
+  "recommonmark",
+  "sphinx",
+  "sphinx_rtd_theme",
+]
+
+code-lint = [
+  "flake8",
+  "flake8-import-order",
+  "flake8-bandit",
+  "flake8-blind-except",
+  "flake8-bugbear",
+  "flake8-builtins",
+  "flake8-docstrings",
+  "flake8-logging-format",
+  "pep8-naming",
+  "pygments",
+]
+
+code-format = [
+  "black",
+  "blacken-docs",
+]
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^1.16"
+tox = "^3.9"
+bump2version = "^0.5.10"
+gitchangelog = "^3.0"
+pystache = "^0.5.4"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
