@@ -1,0 +1,31 @@
+# Deploys Selenium Grid for test/development on local host
+#
+version: '3.5'
+
+services:
+  hub:
+    image: selenium/hub:3.141.59
+    ports:
+      - 4444:4444
+    environment:
+      GRID_MAX_SESSION: 5
+      GRID_TIMEOUT: 15
+      GRID_BROWSER_TIMEOUT: 50
+
+  chrome:
+    image: selenium/node-chrome:3.141.59
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+      HUB_PORT: 4444
+      NODE_MAX_INSTANCES: 15
+
+  firefox:
+    image: selenium/node-firefox:3.141.59
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+      HUB_PORT: 4444
+      NODE_MAX_INSTANCES: 15
