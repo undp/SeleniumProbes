@@ -1,0 +1,12 @@
+[run]
+include =
+  selenium_probes/*
+
+[report]
+omit =
+  tests/
+show_missing = True
+fail_under = 90.0
+
+[html]
+directory = htmlcov
