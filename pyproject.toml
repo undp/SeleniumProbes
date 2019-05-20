@@ -12,7 +12,7 @@ exclude = '''
 
 [tool.poetry]
 name = "selenium_probes"
-version = "0.1.0-rc.0"
+version = "0.1.0-rc.1"
 description = "A framework for building Selenium-based probes."
 
 license = "MIT"
