@@ -76,7 +76,7 @@ class TestBrowser:
         assert b.webdriver is None  # noqa
         assert (  # noqa
             "Exception: failed to connect to remote Selenium instance" in caplog.text
-        )  # noqa
+        )
 
     @pytest.mark.parametrize(
         "browser_capabilities",

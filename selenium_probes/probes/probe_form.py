@@ -207,67 +207,11 @@ class ProbeForm(ProbePage):
 
                     else:
                         # Ensure page loaded successfully
-                        (
-                            page_title_success,
-                            page_title,
-                        ) = browser.wait_for_element_get_attribute()
+                        submit_success = browser.wait_for_page_to_load()
 
-                        if page_title_success:
-                            submit_success = True
-
-                            # if post-submit title check is not expected,
-                            #   title check succeeds
-                            if self._post_submit_title is None:
-                                self.__logger.info(
-                                    "post-submit page title: '%s'", page_title
-                                )
-
-                                title_success = True
-
-                            # else, if post-submit title looks as expected,
-                            #   title check succeeds
-                            elif self._post_submit_title in page_title:
-                                self.__logger.info(
-                                    "post-submit page title match: '%s'",
-                                    self._post_submit_title,
-                                )
-
-                                title_success = True
-
-                            # else (post-submit title does not match) title check fails
-                            else:
-                                self.__logger.warning(
-                                    "post-submit page title DOES NOT match: '%s'",
-                                    self._post_submit_title,
-                                )
-
-                            page_url = browser.webdriver.current_url
-
-                            # if post-submit url check is not expected,
-                            #   url check succeeds
-                            if self._post_submit_url is None:
-                                self.__logger.info(
-                                    "post-submit page url: '%s'", page_url
-                                )
-
-                                url_success = True
-
-                            # else, if post-submit url looks as expected,
-                            #   url check succeeds
-                            elif self._post_submit_url in page_url:
-                                self.__logger.info(
-                                    "post-submit page url match: '%s'",
-                                    self._post_submit_url,
-                                )
-
-                                url_success = True
-
-                            # else (post-submit url does not match) url check fails
-                            else:
-                                self.__logger.warning(
-                                    "post-submit page url DOES NOT match: '%s'",
-                                    self._post_submit_url,
-                                )
+                        if submit_success:
+                            title_success = browser.check_title(self._post_submit_title)
+                            url_success = browser.check_url(self._post_submit_url)
 
         # combine individual checks into overall probe success
         run_result = (

@@ -136,50 +136,11 @@ class ProbePage(ProbeAbstract):
 
         else:
             # Ensure page loaded successfully
-            (page_title_success, page_title) = browser.wait_for_element_get_attribute()
+            page_success = browser.wait_for_page_to_load()
 
-            if page_title_success:
-                page_success = True
-
-                # if title check is not expected, title check succeeds
-                if self._expected_title is None:
-                    self.__logger.info("page title: '%s'", page_title)
-
-                    title_success = True
-
-                # else, if title looks as expected, title check succeeds
-                elif self._expected_title in page_title:
-                    self.__logger.info("page title match: '%s'", self._expected_title)
-
-                    title_success = True
-
-                # else (title does not match) title check fails
-                else:
-                    self.__logger.warning(
-                        "page title DOES NOT match: '%s'", self._expected_title
-                    )
-
-                    title_success = False
-
-                # if url check is not expected, url check succeeds
-                if self._expected_url is None:
-                    self.__logger.info("page url: '%s'", browser.webdriver.current_url)
-
-                    url_success = True
-
-                # else, if url looks as expected, url check succeeds
-                elif self._expected_url in browser.webdriver.current_url:
-                    self.__logger.info("page url match: '%s'", self._expected_url)
-
-                    url_success = True
-
-                # else (url does not match)url check fails
-                else:
-                    self.__logger.warning(
-                        "page url DOES NOT match: '%s'", self._expected_url
-                    )
-
-                    url_success = False
+            if page_success:
+                title_success = browser.check_title(self._expected_title)
+                url_success = browser.check_url(self._expected_url)
 
         # combine individual checks into overall probe success
         run_result = init_success and page_success and title_success and url_success

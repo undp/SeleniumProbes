@@ -155,11 +155,73 @@ class Browser:
         """Return handler for remote Selenium WebDriver."""
         return self._browser
 
+    def check_title(self, expected_title=None):
+        """Check current browser title.
+
+        Returns :obj:`True`, if `expected_title` string is in the browser's page title.
+        If `expected_title` is not defined, just logs the title and returns :obj:`True`.
+
+        Parameters
+        ----------
+        expected_title : :obj:`str`, optional
+            String or sub-strng expected to be in the page title.
+            (default :obj:`None`)
+
+        Returns
+        -------
+        :obj:`bool`
+            Check result (:obj:`True`, if match is found)
+
+        """
+        self._logger.info("page title: '%s'", self._browser.title)
+
+        if expected_title is None:
+            return True
+
+        elif expected_title in self._browser.title:
+            self._logger.info("page title match: '%s'", expected_title)
+            return True
+
+        else:
+            self._logger.warning("page title DOES NOT match: '%s'", expected_title)
+            return False
+
+    def check_url(self, expected_url=None):
+        """Check current browser URL.
+
+        Returns :obj:`True`, if `expected_url` string is in the browser's current URL.
+        If `expected_url` is not defined, just logs the URL and returns :obj:`True`.
+
+        Parameters
+        ----------
+        expected_url : :obj:`str`, optional
+            String or sub-strng expected to be in the current browser's URL.
+            (default :obj:`None`)
+
+        Returns
+        -------
+        :obj:`bool`
+            Check result (:obj:`True`, if match is found)
+
+        """
+        self._logger.info("page url: '%s'", self._browser.current_url)
+
+        if expected_url is None:
+            return True
+
+        elif expected_url in self._browser.current_url:
+            self._logger.info("page url match: '%s'", expected_url)
+            return True
+
+        else:
+            self._logger.warning("page url DOES NOT match: '%s'", expected_url)
+            return False
+
     def wait_for_element_get_attribute(
         self,
         element_xpath="/html/head/title",
         element_attribute="innerHTML",
-        wait_timeout=5,
+        wait_timeout=10,
     ):
         """Find element in browser DOM and get specified attribute/property from it.
 
@@ -226,3 +288,20 @@ class Browser:
             attribute = element.get_attribute(element_attribute)
 
         return success, attribute
+
+    def wait_for_page_to_load(self):
+        """Wait for page to load.
+
+        Waiting the default timeout of :meth:`wait_for_element_get_attribute` for page
+        to make the HTML title element available.
+
+        Returns
+        -------
+        :obj:`bool`
+            success flag (:obj:`True`, if page is loaded;
+            :obj:`False`, if timeout occured)
+
+        """
+        (page_title_success, page_title) = self.wait_for_element_get_attribute()
+
+        return page_title_success
