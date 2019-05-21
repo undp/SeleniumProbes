@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0 (2019-05-21)
+
+### New
+
+* Initial public release. [OK-UNDP]
 
 ## 0.1.0-rc.2 (2019-05-21)
 
